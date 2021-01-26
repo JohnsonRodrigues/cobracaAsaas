@@ -1,0 +1,23 @@
+{
+  "name": "cobranca/asaas",
+  "type"       : "library",
+  "description": "Asaas.com PHP API Wrapper",
+  "keywords"   : ["Asaas", "API", "Payment SaaS", "Credit Card", "Boleto"],
+  "homepage": "https://www.sertanus.com.br",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Johnson Rodrigues",
+      "email": "johnsonrodrigues19@gmail.com",
+      "homepage": "https://www.sertanus.com.br"
+    }
+  ],
+  "require": {
+    "php": "^7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cobranca\\Asaas\\": "src"
+    }
+  }
+}
