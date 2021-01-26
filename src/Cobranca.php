@@ -4,88 +4,100 @@ namespace Cobranca\Asaas;
 
 use Cobranca\Asaas\Connection;
 
-class Cobranca {
+class Cobranca
+{
     public $http;
     protected $cobranca;
-    
+
     public function __construct(Connection $connection)
     {
         $this->http = $connection;
     }
 
     // Retorna a listagem de cobranças
-    public function getAll(array $filtros){
+    public function getAll(array $filtros)
+    {
         $filtro = '';
-        if(is_array($filtros)){
-            if($filtros){
-                foreach($filtros as $key => $f){
-                    if(!empty($f)){
-                        if($filtro){
+        if (is_array($filtros)) {
+            if ($filtros) {
+                foreach ($filtros as $key => $f) {
+                    if (!empty($f)) {
+                        if ($filtro) {
                             $filtro .= '&';
                         }
-                        $filtro .= $key.'='.$f;
+                        $filtro .= $key . '=' . $f;
                     }
                 }
-                $filtro = '?'.$filtro;
+                $filtro = '?' . $filtro;
             }
         }
-        return $this->http->get('/payments'.$filtro);
+        return $this->http->get('/payments' . $filtro);
     }
 
     // Retorna os dados da cobrança de acordo com o Id
-    public function getById($id){
-        return $this->http->get('/payments/'.$id);
+    public function getById($id)
+    {
+        return $this->http->get('/payments/' . $id);
     }
 
     // Retorna a listagem de cobranças de acordo com o Id do Cliente
-    public function getByCustomer($customer_id){
-        return $this->http->get('/payments?customer='.$customer_id);
+    public function getByCustomer($customer_id)
+    {
+        return $this->http->get('/payments?customer=' . $customer_id);
     }
 
     // Retorna a listagem de cobranças de acordo com o Id da Assinaturas
-    public function getBySubscription($subscription_id){
-        return $this->http->get('/payments?subscription='.$subscription_id);
+    public function getBySubscription($subscription_id)
+    {
+        return $this->http->get('/payments?subscription=' . $subscription_id);
     }
 
     // Insere uma nova cobrança
-    public function create(array $dadosCobranca){
+    public function create(array $dadosCobranca)
+    {
         $dadosCobranca = $this->setCobranca($dadosCobranca);
-        if(!empty($dadosCobranca['error'])){
+        if (!empty($dadosCobranca['error'])) {
             return $dadosCobranca;
-        }else {
+        } else {
             return $this->http->post('/payments', $dadosCobranca);
         }
     }
 
     // Insere uma nova cobrança parcelada
-    public function parcelada(array $dadosCobranca){
+    public function parcelada(array $dadosCobranca)
+    {
 
     }
 
     // Insere uma nova cobrança com split
-        /* Saldo dividido em multiplas contas do Asaas*/
-    public function split(array $dadosCobranca){
+    /* Saldo dividido em multiplas contas do Asaas*/
+    public function split(array $dadosCobranca)
+    {
 
     }
 
     // Atualiza os dados da cobrança
-    public function update($id, array $dadosCobranca){
+    public function update($id, array $dadosCobranca)
+    {
 
         return $this->http->post('/payments/' . $id, $dadosCobranca);
     }
 
     // Restaura cobrança removida
-    public function restore($id){
+    public function restore($id)
+    {
 
     }
 
     // Estorna cobrança
-    public function estorno($id){
-
+    public function estorno($id)
+    {
+        return $this->http->post("/payments/{$id}/refund",[]);
     }
 
     // Confirmação em dinheiro
-    public function confirmacao($id, $dados){
+    public function confirmacao($id, $dados)
+    {
         $data = array(
             "paymentDate" => "2019-09-03",
             "value" => 100.00,
@@ -94,8 +106,9 @@ class Cobranca {
     }
 
     // Deleta uma cobrança
-    public function delete($id){
-        return $this->http->get('/payments/'.$id,'','DELETE');
+    public function delete($id)
+    {
+        return $this->http->get('/payments/' . $id, '', 'DELETE');
     }
 
     /**
@@ -107,7 +120,7 @@ class Cobranca {
     {
         // Preenche as informações da cobranca
         $cobranca = $this->setCobranca($dados);
-        
+
         // Faz o post e retorna array de resposta
         return $this->http->post('/payments', ['form_params' => $cobranca]);
     }
@@ -123,17 +136,17 @@ class Cobranca {
     {
         try {
             $this->cobranca = array(
-                'customer'             => '',
-                'billingType'          => '',
-                'value'                => '',
-                'dueDate'              => '',
-                'description'          => '',
-                'externalReference'    => '',
-                'installmentCount'     => '',
-                'installmentValue'     => '',
-                'discount'             => '',
-                'interest'             => '',
-                'fine'                 => '',
+                'customer' => '',
+                'billingType' => '',
+                'value' => '',
+                'dueDate' => '',
+                'description' => '',
+                'externalReference' => '',
+                'installmentCount' => '',
+                'installmentValue' => '',
+                'discount' => '',
+                'interest' => '',
+                'fine' => '',
             );
 
             $this->cobranca = array_merge($this->cobranca, $dados);
@@ -155,17 +168,17 @@ class Cobranca {
     {
         try {
             $this->cobranca = array(
-                'customer'             => '',
-                'billingType'          => '',
-                'value'                => '',
-                'dueDate'              => '',
-                'description'          => '',
-                'externalReference'    => '',
-                'installmentCount'     => '',
-                'installmentValue'     => '',
-                'discount'             => '',
-                'interest'             => '',
-                'fine'                 => '',
+                'customer' => '',
+                'billingType' => '',
+                'value' => '',
+                'dueDate' => '',
+                'description' => '',
+                'externalReference' => '',
+                'installmentCount' => '',
+                'installmentValue' => '',
+                'discount' => '',
+                'interest' => '',
+                'fine' => '',
             );
 
             $this->cobranca = array_merge($this->cobranca, $dados);
