@@ -52,6 +52,12 @@ class Cobranca
         return $this->http->get('/payments?subscription=' . $subscription_id);
     }
 
+    // Retorna os dados da cobrança de acordo com o Id
+    public function getByInstallment($installment_id)
+    {
+        return $this->http->get('/payments?installment=' . $installment_id);
+    }
+
     // Insere uma nova cobrança
     public function create(array $dadosCobranca)
     {
